@@ -29,6 +29,7 @@ echo "[*] compiling binary"
 gcc -m32 "$TMP_DIR/$SRC" -o "$TMP_DIR/$BIN" \
     -O0 \
     -fno-stack-protector \
+    -fno-omit-frame-pointer \
     -no-pie \
     -Wl,-z,relro \
     -Wl,-z,lazy \
