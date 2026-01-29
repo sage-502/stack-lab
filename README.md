@@ -39,7 +39,7 @@ pwnable-lab/
 | 7 | [fsb-bof-ret2libc](https://github.com/sage-502/pwnable-lab/tree/main/fsb-bof-ret2libc) | fsb + bof | ret2libc | ASLR on / canary off |
 | 8 | [fsb-local-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-local-overwrite) | fsb | leak + local overwrite | ASLR on / PIE on |
 | 9 | [fsb-got-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-got-overwrite) | fsb | got overwrite | PIE off / Partial RELRO |
-| 10 | [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce) | fsb | got overwrite | PIE off / Partial RELRO |
+| 10 | [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce) - 번외 | fsb | got overwrite | PIE off / Partial RELRO |
 
 (업데이트 예정)
 
