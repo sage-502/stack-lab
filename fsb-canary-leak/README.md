@@ -3,7 +3,8 @@
 ## 1. 개요
 
 Stack Canary는 스택 버퍼 오버플로우로 saved RET이 덮이는 것을 감지해 프로그램을 종료시키는 보호기법이다.</br>
-이번 실습에서는 canary 값을 leak한 뒤, overflow payload에 canary를 복원하여 RET overwrite를 성공시키는 것이 목표다.
+이번 실습에서는 canary 값을 leak해보는 것이 목표이다.</br> 
+이는 다음 실습에서 overflow payload에 canary를 복원하여 RET overwrite를 성공시키는 것에 사용될 것이다.
 
 이를 위해 우선 canary가 무엇이며, 어디에 저장되고 어떻게 검사되는지 알아본다.
 
