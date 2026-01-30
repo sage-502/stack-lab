@@ -44,7 +44,12 @@
   - printf(buf) + puts(buf)
   - got overwrite로 puts를 system으로 보내기
   - 디렉 이름... fsb-1input-got-rce?
-- [ ] bof fs canary leak
+- [ ] fsb canary leak
+  - canary 개념, 작동 방식 정리
+  - fsb로 leak만
+- [ ] fsb cananry bypass
+  - fsb로 canary leak + bof로 ret2libc
+  - cananry bypass
 - [ ] ROP...
 
 ---
