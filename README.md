@@ -34,12 +34,13 @@ pwnable-lab/
 | 2 | [format-string-vuln](https://github.com/sage-502/pwnable-lab/tree/main/format-string-vuln) | fsb | local overwrite | ASLR off |
 | 3 | [format-string-vuln2](https://github.com/sage-502/pwnable-lab/tree/main/format-string-vuln2) | fsb | ret2win | ASLR off |
 | 4 | [fsb-leak](https://github.com/sage-502/pwnable-lab/tree/main/fsb-leak) | fsb | libc leak | ASLR on |
-| 5 | [bof-ret2libc-epilogue](https://github.com/sage-502/pwnable-lab/tree/main/bof-ret2libc-epilogue) - 번외 | fsb | ret2libc | ASLR off |
+| 5 (번외) | [bof-ret2libc-epilogue](https://github.com/sage-502/pwnable-lab/tree/main/bof-ret2libc-epilogue) | fsb | ret2libc | ASLR off |
 | 6 | [bof-ret2libc-basic](https://github.com/sage-502/pwnable-lab/tree/main/bof-ret2libc-basic) | bof | ret2libc | ASLR off / canary off |
 | 7 | [fsb-bof-ret2libc](https://github.com/sage-502/pwnable-lab/tree/main/fsb-bof-ret2libc) | fsb + bof | ret2libc | ASLR on / canary off |
 | 8 | [fsb-local-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-local-overwrite) | fsb | leak + local overwrite | ASLR on / PIE on |
 | 9 | [fsb-got-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-got-overwrite) | fsb | got overwrite | PIE off / Partial RELRO |
-| 10 | [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce) - 번외 | fsb | got overwrite | PIE off / Partial RELRO |
+| 10 (번외) | [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce) | fsb | got overwrite | PIE off / Partial RELRO |
+| 11 | [fsb-canary-leak](https://github.com/sage-502/pwnable-lab/tree/main/fsb-canary-leak) | fsb | canary leak | ASLR on / canary on |
 
 (업데이트 예정)
 
