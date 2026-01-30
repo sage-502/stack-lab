@@ -47,18 +47,30 @@ pwnable-lab/
 
 ## 사용법
 
-### `setup.sh`
+### 1. 환경 설정 (setup.sh)
 
 - 실습에 필요한 패키지, 툴, 32bit 환경 설치
 - 최소권한, 패스워드 없는 사용자 baby 생성 -> 권한 상승 실습 시 사용
 - 사용 : `sudo bash setup.sh`
 
-### `(취약점 디렉터리)/build.sh`
+### 2. 실습 바이너리 빌드 (build.sh)
 
 - 실습용 디렉터리 `/tmp/(취약점 디렉터리)` 생성
 - 실습용 디렉터리에 vuln.c 복사, vuln.c 컴파일, 권한 설정
 - 사용 : `sudo bash build.sh`
 - 이후 해당 디렉터리로 이동, 필요 시 계정 변경 후 실습
+
+### 3. 실행 예시
+``` bash
+git clone https://github.com/sage-502/pwnable-lab
+cd pwnable-lab
+sudo bash setup.sh    # 최초 1회만 실행
+
+cd stack-bof-basic
+sudo bash build.sh    # 컴파일
+```
+
+※ baby 계정 사용을 원할 시, `/tmp`에 `exploit.py` 복사 후 baby로 로그인.
 
 ---
 
