@@ -16,6 +16,7 @@
 8. [fsb-local-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-local-overwrite)
 9. [fsb-local-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-got-overwrite)
 10. [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce)
+11. [fsb-canary-leak](https://github.com/sage-502/pwnable-lab/tree/main/fsb-canary-leak)
 
 ---
 
@@ -44,7 +45,7 @@
   - printf(buf) + puts(buf)
   - got overwrite로 puts를 system으로 보내기
   - 디렉 이름... fsb-1input-got-rce?
-- [ ] fsb canary leak
+- [x] fsb canary leak
   - canary 개념, 작동 방식 정리
   - fsb로 leak만
 - [ ] fsb cananry bypass
