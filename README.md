@@ -41,6 +41,7 @@ pwnable-lab/
 | 9 | [fsb-got-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-got-overwrite) | fsb | got overwrite | PIE off / Partial RELRO |
 | 10 (번외) | [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce) | fsb | got overwrite | PIE off / Partial RELRO |
 | 11 | [fsb-canary-leak](https://github.com/sage-502/pwnable-lab/tree/main/fsb-canary-leak) | fsb | canary leak | ASLR on / canary on |
+| 12 | [bof-fsb-canary-bypass](https://github.com/sage-502/pwnable-lab/tree/main/bof-fsb-canary-bypass) | bof + fsb | leak + ret2libc | ASLR on / PIE on / canary on |
 
 (업데이트 예정)
 
