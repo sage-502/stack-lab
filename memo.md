@@ -17,6 +17,7 @@
 9. [fsb-local-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-got-overwrite)
 10. [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce)
 11. [fsb-canary-leak](https://github.com/sage-502/pwnable-lab/tree/main/fsb-canary-leak)
+12. [bof-fsb-canary-bypass](https://github.com/sage-502/pwnable-lab/tree/main/bof-fsb-canary-bypass)
 
 ---
 
@@ -48,9 +49,11 @@
 - [x] fsb canary leak
   - canary 개념, 작동 방식 정리
   - fsb로 leak만
-- [ ] fsb cananry bypass
+- [x] fsb cananry bypass
   - fsb로 canary leak + bof로 ret2libc
   - cananry bypass
+  - 보호기법 공부를 좀 해와야겠음...
+    → 레포 하나 더 팔까 함. 이름은 32bit-mitigation-lab...?
 - [ ] ROP...
 
 ---
