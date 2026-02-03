@@ -32,6 +32,7 @@ gcc -m32 "$TMP_DIR/$SRC" -o "$TMP_DIR/$BIN" \
     -fno-omit-frame-pointer \
     -no-pie \
     -z noexecstack
+    -Wl,-z,relro -Wl,-z,now
 
 echo "[+] build complete"
 
