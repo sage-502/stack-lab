@@ -49,7 +49,7 @@ chmod 2755 "$TMP_DIR/$BIN"
 # ---------------------------
 echo "flag{cat_can_do_ROP^._.^}" > "$TMP_DIR/flag"
 chown root:root "$TMP_DIR/flag"
-chmod 2755 "$TMP_DIR/flag"
+chmod 640 "$TMP_DIR/flag"
 
 echo "[+] flag: $TMP_DIR/flag"
 echo "[+] binary: $TMP_DIR/$BIN"
