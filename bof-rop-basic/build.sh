@@ -15,6 +15,7 @@ echo "[*] preparing $TMP_DIR"
 rm -rf "$TMP_DIR"
 mkdir -p "$TMP_DIR"
 
+
 # ---------------------------
 # 2. 소스코드 복사
 # ---------------------------
@@ -28,11 +29,12 @@ echo "[*] compiling binary"
 
 gcc -m32 "$TMP_DIR/$SRC" -o "$TMP_DIR/$BIN" \
     -O0 \
-    -fno-stack-protector \
     -fno-omit-frame-pointer \
+    -fno-stack-protector \
     -no-pie \
     -z noexecstack \
-    -Wl,-z,relro -Wl,-z,now
+    -Wl,-z,relro,-z,now \
+
 
 echo "[+] build complete"
 
@@ -42,6 +44,14 @@ echo "[+] build complete"
 chown root:root "$TMP_DIR/$BIN"
 chmod 2755 "$TMP_DIR/$BIN"
 
+# ---------------------------
+# 5. flag 생성
+# ---------------------------
+echo "flag{cat_can_do_ROP^._.^}" > "$TMP_DIR/flag"
+chown root:root "$TMP_DIR/flag"
+chmod 2755 "$TMP_DIR/flag"
+
+echo "[+] flag: $TMP_DIR/flag"
 echo "[+] binary: $TMP_DIR/$BIN"
 
 echo ""
