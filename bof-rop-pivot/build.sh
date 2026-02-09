@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-LAB_NAME="bof-rop-basic"
+LAB_NAME="bof-rop-pivot"
 TMP_DIR="/tmp/$LAB_NAME"
 SRC="vuln.c"
 BIN="vuln"
