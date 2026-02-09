@@ -54,7 +54,10 @@
   - cananry bypass
   - 보호기법 공부를 좀 해와야겠음...
     → 레포 하나 더 팔까 함. 이름은 32bit-mitigation-lab...?
-- [ ] ROP...
+- [ ] bof + ROP
+  - 32bit로 하니까 가젯이 안 나옴... ROP_bank로 치트키 쓰기로 함.
+  - syscall 쓰기로 함. 체인이 뚱뚱해짐. 스택은 너무 째깐함... pivot 쓰기로 함.
+  - bof-rop-basic 이 bof-rop-pibot이 됨.
 
 ---
 
@@ -71,4 +74,4 @@
 - ret overwrite : ret2win, ret2libc
 - got overwrite
 - leak
-- return oriented programming
+- return oriented programming(ROP)
