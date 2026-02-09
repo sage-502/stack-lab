@@ -19,13 +19,9 @@ void ROP_bank(void) {
         "pop %ebx; ret;\n"
         "pop %ecx; ret;\n"
         "pop %edx; ret;\n"
+        "mov %ebx, %eax; ret;\n"  // ebx = eax
+        "mov %ecx, %eax; ret;\n"  // ecx = eax
     );
-}
-
-__attribute__((noinline, used))
-void do_setregid(void) {
-    gid_t egid = getegid();
-    setregid(egid, egid);
 }
 
 void vuln() {
