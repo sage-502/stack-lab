@@ -1,6 +1,8 @@
-# APPENDIX
+# 부록 : pivot 흐름, ORW 실제 레지스터 값 확인
 
-부록 : pivot 흐름, ORW 실제 레지스터 값 확인
+이 부록은 stack pivot과 syscall ROP의 실제 동작을  
+GDB를 통해 단계별로 확인한 기록이다.</br>
+개념 설명은 README 본문을 참고한다.
 
 ---
 
@@ -274,16 +276,16 @@ eip            0x80491f3           0x80491f3 <vuln+63>
 
 ### 4.1 setregid(getregid(), getregid())
 
-> ```
-> (gdb) info reg
-> eax            0x47                71
-> ecx            0x3e8               1000  //setgid 비트가 무시되어 0 외의 값이 egid 로 나옴
-> edx            0x800               2048
-> ebx            0x3e8               1000
-> esp            0x804c064           0x804c064 <stage+36>
-> ebp            0xdeadbeef          0xdeadbeef
-> eip            0x8049190           0x8049190 <syscall_gadget+10>
-> ```
+```
+(gdb) info reg
+eax            0x47                71
+ecx            0x3e8               1000  //setgid 비트가 무시되어 0 외의 값이 egid 로 나옴
+edx            0x800               2048
+ebx            0x3e8               1000
+esp            0x804c064           0x804c064 <stage+36>
+ebp            0xdeadbeef          0xdeadbeef
+eip            0x8049190           0x8049190 <syscall_gadget+10>
+```
 
 ### 4.2 open("/tmp/bof-rop-pivot/flag", O_RDONLY, 0);
 
