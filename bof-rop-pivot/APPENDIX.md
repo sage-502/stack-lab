@@ -1,6 +1,6 @@
 # 부록 : pivot 흐름, ORW 실제 레지스터 값 확인
 
-이 부록은 stack pivot과 syscall ROP의 실제 동작을  
+이 부록은 stack pivot과 syscall ROP의 실제 동작을 
 GDB를 통해 단계별로 확인한 기록이다.</br>
 개념 설명은 README 본문을 참고한다.
 
