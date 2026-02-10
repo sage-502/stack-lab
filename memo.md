@@ -6,6 +6,8 @@
 
 ## Procedure
 
+제작 순서
+
 1. [stack-bof-basic](https://github.com/sage-502/pwnable-lab/tree/main/stack-bof-basic)
 2. [format-string-vuln](https://github.com/sage-502/pwnable-lab/tree/main/format-string-vuln)
 3. [format-string-vuln2](https://github.com/sage-502/pwnable-lab/tree/main/format-string-vuln2)
@@ -18,6 +20,7 @@
 10. [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce)
 11. [fsb-canary-leak](https://github.com/sage-502/pwnable-lab/tree/main/fsb-canary-leak)
 12. [bof-fsb-canary-bypass](https://github.com/sage-502/pwnable-lab/tree/main/bof-fsb-canary-bypass)
+13. [bof-rop-pivot](https://github.com/sage-502/pwnable-lab/tree/main/bof-rop-pivot)
 
 ---
 
@@ -54,10 +57,10 @@
   - cananry bypass
   - 보호기법 공부를 좀 해와야겠음...
     → 레포 하나 더 팔까 함. 이름은 32bit-mitigation-lab...?
-- [ ] bof + ROP
+- [x] bof + ROP
   - 32bit로 하니까 가젯이 안 나옴... ROP_bank로 치트키 쓰기로 함.
   - syscall 쓰기로 함. 체인이 뚱뚱해짐. 스택은 너무 째깐함... pivot 쓰기로 함.
-  - bof-rop-basic 이 bof-rop-pibot이 됨.
+  - bof-rop-basic 이 bof-rop-pivot이 됨.
 
 ---
 
