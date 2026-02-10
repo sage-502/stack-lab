@@ -66,8 +66,8 @@ void ROP_bank(void) {
         "pop %ebx; ret;\n"
         "pop %ecx; ret;\n"
         "pop %edx; ret;\n"
-        "mov %ebx, %eax; ret;\n"
-        "mov %ecx, %eax; ret;\n"
+        "mov %eax, %ebx; ret;\n"
+        "mov %eax, %ecx; ret;\n"
     );
 }
 ```
