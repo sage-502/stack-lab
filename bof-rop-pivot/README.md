@@ -421,6 +421,10 @@ Segmentation fault
 * 이후 ROP 체인 종료로 인한 segfault는 정상적인 동작
 
 
+flag 출력 화면:
+![flag](https://github.com/sage-502/pwnable-lab/blob/main/images/bof-rop-pivot/07.png)
+
+
 > **노트 ── gdb에서 syscall이 정상 동작하지 않는 이유**
 > 
 > gdb로 바이너리를 실행할 경우,
