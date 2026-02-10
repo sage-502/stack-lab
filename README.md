@@ -42,8 +42,12 @@ pwnable-lab/
 | 10 (번외) | [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce) | fsb | got overwrite | PIE off / Partial RELRO |
 | 11 | [fsb-canary-leak](https://github.com/sage-502/pwnable-lab/tree/main/fsb-canary-leak) | fsb | canary leak | ASLR on / canary on |
 | 12 | [bof-fsb-canary-bypass](https://github.com/sage-502/pwnable-lab/tree/main/bof-fsb-canary-bypass) | bof + fsb | leak + ret2libc | ASLR on / PIE on / canary on |
+| 13 | [bof-rop-pivot](https://github.com/sage-502/pwnable-lab/tree/main/bof-rop-pivot) | bof | syscall orw rop(pivot) | ASLR on / PIE off / cananry off |
 
 (업데이트 예정)
+
+※ NX enabled 기본</br>
+※ 상세 설명은 해당 디렉터리 README.md 파일로 확인
 
 ---
 
