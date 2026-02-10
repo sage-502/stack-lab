@@ -304,18 +304,6 @@ int 0x80
 # eax = fd
 ```
 
-GDB에서 info reg 결과:
-```
-(gdb) info reg
-eax            0x5                 5
-ecx            0x0                 0
-edx            0x0                 0
-ebx            0x804c340           134529856
-esp            0x804c088           0x804c088 <stage+72>
-ebp            0xdeadbeef          0xdeadbeef
-eip            0x8049190           0x8049190 <syscall_gadget+10>
-```
-
 ### 8.2 read
 
 ```c
@@ -334,17 +322,6 @@ int 0x80
 
 ※ 여기서 말하는 BUF는 vuln 함수의 로컬 버퍼 buf가 아닌, stage의 일부이다.
 
-GDB에서 info reg 결과:
-```
-(gdb) info reg
-eax            0x3                 3
-ecx            0x804c440           134530112
-edx            0x40                64
-ebx            0xfffffff3          -13
-esp            0x804c0a8           0x804c0a8 <stage+104>
-ebp            0xdeadbeef          0xdeadbeef
-eip            0x8049190           0x8049190 <syscall_gadget+10>
-```
 
 ### 8.3 write
 
@@ -436,18 +413,6 @@ flag 출력 화면:
 > * 실제 exploit 결과(권한 상승, flag 출력)는 gdb 밖에서만 확인 가능
 > 
 > 이는 정상적인 동작이며, exploit이 실패한 것이 아니다.
->
-> setregid 후 GDB에서 info reg 결과 예시:
-> ```
-> (gdb) info reg
-> eax            0x47                71
-> ecx            0x3e8               1000  //setgid 비트가 무시되어 0 외의 값이 egid 로 나옴
-> edx            0x800               2048
-> ebx            0x3e8               1000
-> esp            0x804c064           0x804c064 <stage+36>
-> ebp            0xdeadbeef          0xdeadbeef
-> eip            0x8049190           0x8049190 <syscall_gadget+10>
-> ```
 
 ---
 
