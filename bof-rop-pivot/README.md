@@ -29,6 +29,8 @@
 ## 3. 취약 코드
 
 ```c
+char stage[0x1000];
+
 void vuln() {
     char buf[64];
     puts("input:");
@@ -38,25 +40,29 @@ void vuln() {
 
 * `read`로 인해 **saved EBP / saved RET overwrite 가능**
 * NX가 켜져 있어 **쉘코드 주입 불가**
-* 스택 공간이 제한적이므로 **긴 ROP 체인을 직접 쌓기 어려움**
+* 스택 공간이 제한적이므로 **긴 ROP 체인을 안정적으로 쌓기 어려움**
+* 전역 공간에 선언된 `stage`를 스택처럼 사용 가능
 
 ---
 
 ## 4. 공격 전체 흐름 요약
 
+
 1. **BOF로 saved EBP / RET 덮기**
-2. `leave; ret`를 이용해 **stack pivot**
-3. `.bss(stage)` 영역을 **가짜 스택(fake stack)** 으로 사용
-4. syscall ROP로:
+2. `leave; ret`를 이용해 **stack pivot**</br>
+    → `.bss(stage)` 영역을 **가짜 스택(fake stack)** 으로 사용
+3. syscall ROP로:
    * 권한 정렬 (`getegid → setregid`)
    * ORW (`open → read → write`)
-5. flag 출력
+4. flag 출력
 
----
+### 왜 Stack Pivot이 필요한가?
 
-## 5. 왜 Stack Pivot이 필요한가?
+**Stack pivot**은 프로그램의 스택 포인터(ESP/RSP)를 
+공격자가 제어할 수 있는 다른 메모리 영역(Fake Stack)으로 
+강제로 이동시키는 기술을 말한다.
 
-기존 스택에는 다음과 같은 문제가 있다.
+이 실습에서는 기존 스택에 다음과 같은 문제가 있다.
 
 * ROP 체인이 길어짐 (권한 세팅 + ORW)
 * saved RET 이후 공간이 충분하지 않음
@@ -68,11 +74,12 @@ void vuln() {
 * `leave; ret`를 실행시켜
 * **ESP를 stage로 이동**
 
-이렇게 stage 영역을 **스택처럼 사용**한다.
+이렇게 Stack pivot을 하여 stage 영역을 **스택처럼 사용**한다.
+</br>이로써 더 안정적인 exploit이 가능해진다.
 
 ---
 
-## 6. Stage 구조
+## 5. Stage 구조
 
 ```
 stage:
@@ -84,67 +91,168 @@ stage:
 +0x400 read buffer
 ```
 
+* 실제 exploit을 수행하는 gadget은 [stage+0x04]에서 시작됨
 * 코드(ROP 체인)와 데이터(flag 문자열, buffer)를 분리
 * ORW 중 주소 계산이 단순해짐
 
+stage에 들어가는 ROP gadget이 수행하는 동작은 다음과 같다.
+
+1. 권한 세팅: `setregid(getregid(), getregid())`
+2. flag 파일 열기: `fd = open("/tmp/bof-rop-pivot/flag", O_RDONLY, 0)`
+3. flag 파일 읽기: `read(fd, BUF, 0x40)`
+4. 읽은 flag 출력: write(1, BUF, 0x40)
+
+이를 syscall을 사용하여 수행하도록 한다.
+
 ---
 
-## 7. 권한 세팅이 필요한 이유
+## 6. syscall ROP
 
-flag 파일의 권한은 다음과 같다.
+이 문제에서는 libc 함수(`system`, `open`, `read`, `write` 등)를 사용하지 않고
+**리눅스 커널 syscall을 직접 호출하는 ROP 체인**을 구성한다.
+
+이는 다음과 같은 환경적 제약 때문이다.
+
+* NX enabled → 쉘코드 주입 불가
+* Full RELRO → GOT overwrite 불가
+* libc 호출 시 PIC/GOT/EBX 문제 발생
+* **syscall은 커널 ABI이므로 libc 상태와 무관**
+
+따라서 `int 0x80`을 이용한 **syscall-only ROP**가 가장 안정적인 공격 방식이 된다.
+
+### 6.1 x86 (32-bit) Linux syscall 규약
+
+x86 32-bit 리눅스에서 `int 0x80`을 사용할 경우,
+syscall 번호와 인자는 **레지스터**로 전달된다.
+
+### 6.2 기본 규약
+
+| 레지스터       | 의미         |
+| ---------- | ---------- |
+| `eax`      | syscall 번호 |
+| `ebx`      | 1번째 인자     |
+| `ecx`      | 2번째 인자     |
+| `edx`      | 3번째 인자     |
+| `int 0x80` | syscall 실행 |
+
+syscall의 리턴값은 `eax`에 저장된다.
+
+### 6.3 사용한 syscall 번호
+
+본 실습에서 사용한 syscall 번호는 다음과 같다
+(Linux x86 32-bit 기준).
+
+| syscall    | 번호 |
+| ---------- | -- |
+| `getegid`  | 50 |
+| `setregid` | 71 |
+| `open`     | 5  |
+| `read`     | 3  |
+| `write`    | 4  |
+
+> **노트**
+> syscall 번호는 아키텍처 및 ABI에 따라 다르며,
+> x86_64 환경에서는 전혀 다른 번호와 호출 방식(`syscall`)을 사용한다.
+
+---
+
+## 7. 권한 세팅 syscall 흐름
+
+### 7.1 권한 세팅의 필요성
+
+flag 파일은 다음 권한을 가진다.
 
 ```
 -rw-r-----  root root flag
 ```
 
-바이너리는 `setgid`이므로:
+바이너리는 `setgid`이므로 실행 시:
 
 * `egid = root`
 * `rgid = 사용자 그룹`
 
-이 상태에서는 `open(flag)`가 실패할 수 있다.
-
-따라서 syscall ROP로 다음을 수행한다.
+이 상태에서는 `open(flag)`가 실패할 수 있으므로,
+syscall ROP로 권한을 명시적으로 맞춰준다.
 
 ```c
 egid = getegid();
 setregid(egid, egid);
 ```
 
-### 사용한 syscall 번호 (x86 32bit)
+### 7.2 레지스터 흐름
 
-| syscall  | 번호 |
-| -------- | -- |
-| getegid  | 50 |
-| setregid | 71 |
-| open     | 5  |
-| read     | 3  |
-| write    | 4  |
+```asm
+# getegid
+eax = 50
+int 0x80
+# eax = egid
+
+# eax → ebx, ecx 복사
+ebx = eax
+ecx = eax
+
+# setregid
+eax = 71
+int 0x80
+```
+
+이후에는 flag 파일을 정상적으로 열 수 있다.
 
 ---
 
-## 8. ORW syscall ROP
+## 8. ORW(Open–Read–Write) syscall 흐름
 
-### open
+### 8.1 open
 
 ```c
 fd = open("/tmp/bof-rop-pivot/flag", O_RDONLY, 0);
 ```
 
-### read
+```asm
+eax = 5
+ebx = &"/tmp/bof-rop-pivot/flag"
+ecx = 0
+edx = 0
+int 0x80
+# eax = fd
+```
+
+
+
+### 8.2 read
 
 ```c
 read(fd, BUF, 0x40);
 ```
 
-### write
+```asm
+eax = 3
+ebx = fd
+ecx = BUF
+edx = 0x40
+int 0x80
+```
+
+이 syscall 이후, **flag 내용은 BUF에 저장된다.**
+
+※ 여기서 말하는 BUF는 vuln 함수의 로컬 버퍼 buf가 아닌, stage의 일부이다.
+
+
+### 8.3 write
 
 ```c
 write(1, BUF, 0x40);
 ```
 
-* `open`의 리턴값(fd)을 `eax`에서 `ebx`로 전달
-* libc 함수 호출 없이 `int 0x80`만 사용
+```asm
+eax = 4
+ebx = 1        # stdout
+ecx = BUF
+edx = 0x40
+int 0x80
+```
+
+이 syscall을 통해 BUF에 저장된 flag 내용이 화면에 출력된다.
 
 ---
 
@@ -159,6 +267,20 @@ Segmentation fault
 
 * flag 출력 성공
 * 이후 ROP 체인 종료로 인한 segfault는 정상적인 동작
+
+
+
+> **노트 ── gdb에서 syscall이 정상 동작하지 않는 이유**
+> 
+> gdb로 바이너리를 실행할 경우,
+> 디버거의 보안 정책에 의해 **setuid/setgid 비트가 무시**된다.
+> 
+> 따라서:
+> 
+> * gdb 안에서는 `getegid()`가 일반 사용자 그룹 ID를 반환
+> * 실제 exploit 결과(권한 상승, flag 출력)는 gdb 밖에서만 확인 가능
+> 
+> 이는 정상적인 동작이며, exploit이 실패한 것이 아니다.
 
 ---
 
@@ -175,26 +297,27 @@ Segmentation fault
 > **이 문제는 ROP 가젯 퍼즐이 아니라,
 > 공격 흐름과 메모리 모델을 이해하는 데 초점을 둔다.**
 
-
-
-
-
+---
 
 ## 부록 : pivot 흐름
 
-1. vuln함수
+### 1) vuln함수
 
-중간:
+vuln 실행 중간:
 ```
 read(0, buf, 400); //bof 
-// 1) saved ebp를 stage_addr로, saved ret를 read@plt로 변경
-// 2) leave_ret 가젯
-// 3) read@plt의 인자(0, stage_addr, 0x800) 세팅
 ```
+bof를 이용하여 다음과 같이 stage1 페이로드를 입력한다.
+
+1. saved ebp를 stage_addr로, saved ret를 read@plt로 변경
+2. leave_ret 가젯
+3. read@plt의 인자(0, stage_addr, 0x800) 세팅
 
 스택 프레임
 ```
 [높은주소]
++-----------------------+
+|    leave_ret godget
 saved ret: read@plt
 saved ebp: stage_addr <- ebp(vuln의 base)
 ...
