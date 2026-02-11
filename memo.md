@@ -21,6 +21,7 @@
 11. [fsb-canary-leak](https://github.com/sage-502/pwnable-lab/tree/main/fsb-canary-leak)
 12. [bof-fsb-canary-bypass](https://github.com/sage-502/pwnable-lab/tree/main/bof-fsb-canary-bypass)
 13. [bof-rop-pivot](https://github.com/sage-502/pwnable-lab/tree/main/bof-rop-pivot)
+14. [bof-rop-orw](https://github.com/sage-502/pwnable-lab/tree/main/bof-rop-orw)
 
 ---
 
@@ -60,7 +61,12 @@
 - [x] bof + ROP
   - 32bit로 하니까 가젯이 안 나옴... ROP_bank로 치트키 쓰기로 함.
   - syscall 쓰기로 함. 체인이 뚱뚱해짐. 스택은 너무 째깐함... pivot 쓰기로 함.
+  - read 400bytes라 사실 pivot 안 써도 가능하긴 함.
   - bof-rop-basic 이 bof-rop-pivot이 됨.
+- [x] bof + ROP 난이도 하향 ver
+  - 발표용...
+  - bof-rop-pivot 변형
+  - 원본과 다른 점: pivot 제거, 전역에 flag 경로와 read/write용 버퍼 선언, 권한세팅 main에서.
 
 ---
 
