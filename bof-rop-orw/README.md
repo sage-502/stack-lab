@@ -3,7 +3,7 @@
 ## 1. 개요
 
 이 실습은 **Stack Buffer Overflow**를 이용해
-**stack pivot 이후 syscall ROP 체인으로 flag 파일을 출력**하는 것을 목표로 한다.
+**syscall ROP 체인으로 flag 파일을 출력**하는 것을 목표로 한다.
 
 * 쉘 획득 X
 * libc 함수 호출 X
