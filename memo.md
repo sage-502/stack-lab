@@ -16,7 +16,7 @@
 6. [bof-ret2libc-basic](https://github.com/sage-502/pwnable-lab/tree/main/bof-ret2libc-basic)
 7. [fsb-bof-ret2libc](https://github.com/sage-502/pwnable-lab/tree/main/fsb-bof-ret2libc)
 8. [fsb-local-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-local-overwrite)
-9. [fsb-local-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-got-overwrite)
+9. [fsb-got-overwrite](https://github.com/sage-502/pwnable-lab/tree/main/fsb-got-overwrite)
 10. [fsb-1input-got-rce](https://github.com/sage-502/pwnable-lab/tree/main/fsb-1input-got-rce)
 11. [fsb-canary-leak](https://github.com/sage-502/pwnable-lab/tree/main/fsb-canary-leak)
 12. [bof-fsb-canary-bypass](https://github.com/sage-502/pwnable-lab/tree/main/bof-fsb-canary-bypass)
