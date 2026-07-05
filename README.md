@@ -1,4 +1,4 @@
-# pwnable-lab
+# stack-lab
 
 포너블 공부 기록 모음집
 
@@ -15,7 +15,7 @@
 예시, 변동 있음.
 
 ```
-pwnable-lab/
+stack-lab/
 ├── setup.sh            // 패키지, 툴, 32bit 환경 설정
 ├── stack-bof-basic/
 │    ├── README.md      // 취약점 개념 정리, 바이너리 분석, 익스플로잇
@@ -69,7 +69,7 @@ pwnable-lab/
 
 ### 3. 실행 예시
 ``` bash
-git clone https://github.com/sage-502/pwnable-lab
+git clone https://github.com/sage-502/stack-lab
 cd pwnable-lab
 sudo bash setup.sh    # 최초 1회만 실행
 
@@ -88,3 +88,9 @@ sudo bash build.sh    # 컴파일
 4. 취약점 제거한 `fix.c` 확인
 
 ※ `exploit.py` 와 `payload.py`에서 주소나 오프셋 등은 직접 수정하여 사용해야 함.
+
+---
+
+## 안내
+
+기존 레포 이름은 **pwnable-lab**이었으며, 범위 변경으로 인해 **stack-lab**으로 변경했다.
